@@ -1,0 +1,116 @@
+{% load myfilter %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+    table {
+      width: 100%;
+      border-top: 1px sold;
+      border-bottom: 1px solid;
+    }
+    table td{
+      border:1px solid #000000;
+      border-left:none;
+    }
+    td {
+      border-left: none;
+      height: 40px;
+      font-size: 16px;
+    }
+    table tr td:last-child {
+      border-right:none;
+    }
+    td span {
+      padding-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div style="width: 210mm; height: 297mm;">
+      <table cellspacing="0px" style="border-collapse:collapse; text-align: center;">
+        <tbody>
+          <tr>
+            <td colspan="2"><span>样品名称</span></td>
+            <td colspan="4"><span>{{ name }}</span></td>
+          </tr>
+          <tr>
+            <td colspan="2"><span>样品标识</span></td>
+            <td colspan="4"><span>{{ code }}</span></td>
+          </tr>
+          <tr>
+            <td colspan="2"><span>样品数量</span></td>
+            <td colspan="2"><span>{{ num }}</span></td>
+            <td style="width: 120px;"><span>收样日期</span></td>
+            <td style="width: 180px;"><span>{{ rec_date }}</span></td>
+          </tr>
+          <tr>
+            <td colspan="2"><span>商标</span></td>
+            <td colspan="2"><span>{{ brand }}</span></td>
+            <td><span>样品状态</span></td>
+            <td><span>{{ prop }}</span></td>
+          </tr>
+          <tr>
+            <td style="width: 100px;"><span>执行标准</span></td>
+            <td style="width: 160px;"><span>检验项目</span></td>
+            <td colspan="3"><span>检验检测标准</span></td>
+            <td><span>检验人</span></td>
+          </tr>
+          {% for item in sheet_items %}
+            {% if forloop.counter == 1 %}
+            <tr>
+              <td rowspan="{{ sheet_items_len }}"><span>{{ perform_no }}</span></td>
+              <td><span>{{ item.name }}</span></td>
+              <td colspan="3"><span>{{ item.no }}</span></td>
+              <td><span></span></td>
+            </tr>
+            {% else %}
+              <tr>
+                <td><span>{{ item.name }}</span></td>
+                <td colspan="3"><span>{{ item.no }}</span></td>
+                <td><span></span></td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          <tr>
+            <td><span>收检人</span></td>
+            <td colspan="2"><span>杨明</span></td>
+            <td style="width: 130px;"><span>收检日期/时间</span></td>
+            <td colspan="2"><span></span></td>
+          </tr>
+          <tr>
+            <td><span>要求检验完成日期</span></td>
+            <td colspan="2"><span></span></td>
+            <td><span></span></td>
+            <td colspan="2"><span></span></td>
+          </tr>
+          <tr>
+            <td><span>检验完成时间</span></td>
+            <td colspan="2"><span></span></td>
+            <td><span></span></td>
+            <td colspan="2"><span></span></td>
+          </tr>
+          <tr>
+            <td><span>备注</span></td>
+            <td colspan="5"><span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {}
+      }
+    })
+  </script>
+</html>

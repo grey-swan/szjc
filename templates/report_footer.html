@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body style="text-align: center;">
+{% if page > 0 %}
+  <div>
+    第 {{ page }} 页
+  </div>
+  <div>本报告共 {{ pages }} 页，缺页复印无效</div>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,436 @@
+{% load myfilter %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+    .head-code-name {
+      text-align: right;
+      font-size: 20px;
+      margin-right: 60px;
+    }
+    .head-code {
+      text-align: right;
+      font-size: 20px;
+    }
+    .head-cn {
+      font-size: 80px;
+      font-family: '黑体';
+      text-align: center;
+    }
+    .head-en {
+      font-size: 40px;
+      font-family: '黑体';
+      padding-top: 30px;
+      text-align: center;
+    }
+    .cover-row {
+      font-size: 26px;
+      padding-top: 30px;
+    }
+    .cover-item {
+      border-bottom: 1px solid;
+      width: 100%;
+      display: block;
+      text-align: center
+    }
+    .cover-footer {
+      font-size: 30px;
+      font-family: '黑体';
+      text-align: center;
+    }
+    .head {
+      text-align: center;
+      font-size: 30px;
+    }
+    .line-text {
+      font-size: 20px;
+      line-height: 35px;
+      margin: 0px;
+    }
+
+    .head-no {
+      text-align: right;
+    }
+    .head-name {
+      font-size: 26px;
+    }
+    table {
+      width: 100%;
+      border-top: 1px sold;
+      border-bottom: 1px solid;
+    }
+    table td{
+      border:1px solid #000000;
+      border-left:none;
+    }
+    td {
+      border-left: none;
+      height: 40px;
+      font-size: 16px;
+    }
+    table tr td:last-child {
+      border-right:none;
+    }
+    td span {
+      padding-left: 8px;
+    }
+    .td1 {
+      width: 150px;
+    }
+    .td3 {
+      width: 150px;
+    }
+
+    .td-seq {
+      width: 10mm;
+    }
+    .td-basic {
+      min-width: 40mm;
+    }
+    .td-unit {
+      min-width: 20mm;
+    }
+    .td-standard {
+      min-width: 20mm;
+    }
+    .td-conclusion {
+      min-width: 18mm;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 封面 -->
+    <div style="width: 210mm; height: 325mm; position: relative;">
+      <el-row>
+        <el-col :span="24" style="text-align: right;">
+          <span class="head-code-name">报告编号</span>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24" style="text-align: right;">
+          <span class="head-code">{{ report.no }}</span>
+        </el-col>
+      </el-row>
+
+      <el-row style="padding-top: 120px;">
+        <el-col :span="24">
+          <div class="head-cn"><span>检&nbsp;验&nbsp;报&nbsp;告</span></div>
+        </el-col>
+      </el-row>
+        <el-row>
+        <el-col :span="24">
+          <div class="head-en"><span>TEST&nbsp;&nbsp;REPORT</span></div>
+        </el-col>
+      </el-row>
+
+      <el-row class="cover-row" style="margin-top: 120px;">
+        <el-col :span="4" :offset="4">
+          <span>项目名称：</span>
+        </el-col>
+        <el-col :span="12"><span class="cover-item">{{ sample.name }}</span></el-col>
+      </el-row>
+      <el-row class="cover-row">
+        <el-col :span="4" :offset="4">
+          <span>委托单位：</span>
+        </el-col>
+        <el-col :span="12"><span class="cover-item">{{ sample.agent_firm }}</span></el-col>
+      </el-row>
+      <el-row class="cover-row">
+        <el-col :span="4" :offset="4">
+          <span>委托单位：</span>
+        </el-col>
+        <el-col :span="12"><span class="cover-item">{{ sample.agent_firm }}</span></el-col>
+      </el-row>
+      <el-row class="cover-row">
+        <el-col :span="4" :offset="4">
+          <span>检测类别：</span>
+        </el-col>
+        <el-col :span="12"><span class="cover-item">{{ sample.type }}</span></el-col>
+      </el-row>
+
+      <el-row style="position:absolute; bottom:100px; left:0; right:0;">
+        <el-col :span="24">
+          <div class="cover-footer">
+            <span>云&nbsp;南&nbsp;三&nbsp;正&nbsp;技&nbsp;术&nbsp;检&nbsp;测&nbsp;有&nbsp;限&nbsp;公&nbsp;司</span>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- 声明 -->
+    <div style="width: 210mm; height: 325mm; position: relative;">
+      <el-row>
+        <el-col :span="24">
+          <div class="head"><strong>声&nbsp;&nbsp;&nbsp;明</strong></div>
+        </el-col>
+      </el-row>
+
+      <el-row style="margin-top: 30px;">
+        <el-col :span="24">
+          <p class="line-text">1、报告内容涂改、缺页复制、无批准人（授权签字人）签字、未加盖检验检测专用章均无效。</p>
+          <p class="line-text">2、检验检测委托方如对本报告有异议，请于收到报告之日起或在指定领取报告终止之日起七个工作日内，向本公司申请复验，逾期不申请的，视为认可本检验报告。</p>
+          <p class="line-text">3、对于采用国家规定的快速检测方法对食用农产品进行抽查检测，被抽查人对检测结果有异议的，可以自收到检测结果时起四小时内申请复检，逾期不申请的，视为认可当次检测结果。</p>
+          <p class="line-text">4、由委托单位自行采集的样品，本公司仅对送检样品的测试数据负责，不对样品来源负责；测试条件和工况变化大的样品、无法保存和复现的样品，本公司仅对本次所采样品的检验数据负责。</p>
+          <p class="line-text">5、委托检测样品留样期一般为发出报告后30天，样品保质期不足30天的，保质期满后即对该样品进行处置。</p>
+          <p class="line-text">6、未经本公司书面批准，本报告及数据不得用于商业宣传，违者必究。</p>
+        </el-col>
+      </el-row>
+
+      <el-row style="position:absolute; bottom:20px; left:0; right:0;">
+        <el-col :span="24">
+          <p>本机构通讯资料</p>
+          <p>地址：昆明市高新区海源中路30号创新大厦A段3楼301室</p>
+          <p>检测业务联系电话及传真：（0871）67351489</p>
+          <p>质量投诉电话及传真：（0871）67351489</p>
+          <p>邮政编码：650034</p>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- 样品信息 -->
+    <div style="width: 210mm; height: 325mm;">
+      <el-row>
+        <el-col :span="24">
+          <div class="head-no">报告编号：{{ report.no }}</div>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24"><span class="head-name">样品基本情况</span></el-col>
+      </el-row>
+
+      <table cellspacing="0px" style="border-collapse:collapse">
+        <tbody>
+          <tr>
+            <td class="td1"><span>样品名称</span></td>
+            <td><span>{{ sample.name }}</span></td>
+            <td class="td3"><span>检验检测类别</span></td>
+            <td><span>{{ sample.type }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>样品标识</span></td>
+            <td><span>{{ sample.code }}</span></td>
+            <td class="td3"><span>商标</span></td>
+            <td><span>{{ sample.brand|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>批号/生产日期</span></td>
+            <td><span>{{ sample.prod_date|get_time }}</span></td>
+            <td class="td3"><span>规格</span></td>
+            <td><span>{{ sample.spec|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>样品数量</span></td>
+            <td><span>{{ sample.num|default:"/" }}</span></td>
+            <td class="td3"><span>性状/包装状态</span></td>
+            <td><span>{{ sample.prop|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>委托单位</span></td>
+            <td><span>{{ sample.agent_firm|default:"/" }}</span></td>
+            <td class="td3"><span>联系人</span></td>
+            <td><span>{{ sample.agent_user|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1" ><span>样品来源</span></td>
+            <td colspan="3"><span>{{ sample.source|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1" ><span>生产单位</span></td>
+            <td colspan="3"><span>{{ sample.prod_firm|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>委托单位地址</span></td>
+            <td><span>{{ sample.agent_address|default:"/" }}</span></td>
+            <td class="td3"><span>电话</span></td>
+            <td><span>{{ sample.tell|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1" ><span>受检单位</span></td>
+            <td colspan="3"><span>{{ sample.accept_firm|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1" ><span>受检单位地址</span></td>
+            <td colspan="3"><span>{{ sample.accept_address|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>送样人</span></td>
+            <td><span>{{ sample.send_user|default:"/" }}</span></td>
+            <td class="td3"><span>送样日期</span></td>
+            <td><span>{{ sample.send_date|get_time|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>收样人</span></td>
+            <td><span>{{ sample.rec_user|default:"/" }}</span></td>
+            <td class="td3"><span>收样日期</span></td>
+            <td><span>{{ sample.rec_date|get_time|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>检验检测日期</span></td>
+            <td colspan="3"><span></span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>环境条件</span></td>
+            <td colspan="3"><span></span></td>
+          </tr>
+          <tr>
+            <td class="td1"><span>检验/判定依据</span></td>
+            <td colspan="3">
+              {% if perform %}
+                <span>{{ perform.name }} {{ perform.no }}</span>
+              {% else %}
+                <span>/</span>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td class="td1" style="height: 80px;"><span>主要仪器</span></td>
+            <td colspan="3"><span>{{ sheet.instrument|default:"/" }}</span></td>
+          </tr>
+          <tr>
+            <td class="td1" style="height: 150px;"><span>结论</span></td>
+            <td colspan="3">
+              <div><span>依据 xxx 标准，所检项目符合标准要求。</span></div>
+              <div><br></div>
+              <div style="text-align: right; margin-right: 60px;"><span>检验检测专用章</span></div>
+              <div style="text-align: right; margin-right: 30px; margin-top: 5px;">
+                <span>签发日期：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</span>
+              </div>
+            </td>
+          </tr><tr>
+            <td class="td1" ><span>备注</span></td>
+            <td colspan="3"><span>与样品相关的信息来源于样品包装标识或由委托方提供。</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <el-row style="margin-top: 10px; font-size: 18px;">
+        <el-col :span="8"><span>批准：</span></el-col>
+        <el-col :span="8"><span>审核：</span></el-col>
+        <el-col :span="8"><span>检验：</span></el-col>
+      </el-row>
+
+    </div>
+
+    <!-- 检测项信息 -->
+    <div style="width: 210mm; height: 297mm;">
+      <el-row>
+        <el-col :span="24">
+          <div class="head-no">报告编号：SZJC2019010107</div>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24"><span class="head-name">检验检测结果</span></el-col>
+      </el-row>
+
+      <table cellspacing="0px" style="border-collapse:collapse; text-align: center;">
+        <tbody>
+          <tr>
+            <td class="td-seq">序号</td>
+            <td colspan="2">检验检测项目</td>
+            <td class="td-basic">检验检测依据</td>
+            <td>结果</td>
+            <td class="td-unit">单位</td>
+            <td class="td-standard">标准限值</td>
+            <td class="td-conclusion">单项结论</td>
+          </tr>
+          <!-- 有分组 -->
+          {% for item in items_group.items %}
+            {% if forloop.counter == 1 %}
+              <tr>
+                <td class="td-seq">{{ forloop.counter }}</td>
+                <td rowspan="{{ items_group.count }}">{{ items_group.group_name }}</td>
+                <td>{{ item.name|default:"/" }}</td>
+                <td rowspan="{{ items_group.count }}">{{ item.no|default:"/" }}</td>
+                <td>{{ item.result|default:"/" }}</td>
+                <td class="td-unit">{{ item.unit|default:"/" }}</td>
+                <td class="td-standard">{{ item.standard|default:"/" }}</td>
+                <td class="td-conclusion">{{ item.conclusion|default:"/" }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td class="td-seq">{{ forloop.counter }}</td>
+                <td>{{ item.name|default:"/" }}</td>
+                <td>{{ item.result|default:"/" }}</td>
+                <td class="td-unit">{{ item.unit|default:"/" }}</td>
+                <td class="td-standard">{{ item.standard|default:"/" }}</td>
+                <td class="td-conclusion">{{ item.conclusion|default:"/" }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          <!-- 无分组 -->
+          {% for item in items_no_group.items %}
+            {% if item.name != items_group.group_name %}
+              <tr>
+                <td class="td-seq">{{ forloop.counter|add:items_group.count }}</td>
+                <td colspan="2">{{ item.name|default:"/" }}</td>
+                <td class="td-basic">{{ item.no|default:"/" }}</td>
+                <td>{{ item.result|default:"/" }}</td>
+                <td class="td-unit">{{ item.unit|default:"/" }}</td>
+                <td class="td-standard">{{ item.standard|default:"/" }}</td>
+                <td class="td-conclusion">{{ item.conclusion|default:"/" }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+
+{#          {% for item in sheet.items %}#}
+{#          <tr>#}
+{#            <td class="td-seq">{{ forloop.counter }}</td>#}
+{#            <td colspan="2">{{ item.name|default:"/" }}</td>#}
+{#            <td class="td-basic">{{ item.no|default:"/" }}</td>#}
+{#            <td>{{ item.result|default:"/" }}</td>#}
+{#            <td class="td-unit">{{ item.unit|default:"/" }}</td>#}
+{#            <td class="td-standard">{{ item.standard|default:"/" }}</td>#}
+{#            <td class="td-conclusion">单项结论</td>#}
+{#          </tr>#}
+{#          {% endfor %}#}
+{#          <tr>#}
+{#            <td class="td-seq">1</td>#}
+{#            <td rowspan="3">感官</td>#}
+{#            <td>色泽</td>#}
+{#            <td>GB 5009.12-2017</td>#}
+{#            <td>该样为浅黄棕色</td>#}
+{#            <td class="td-unit">mg/kg</td>#}
+{#            <td class="td-standard">0.5</td>#}
+{#            <td class="td-conclusion">合格</td>#}
+{#          </tr>#}
+{#          <tr>#}
+{#            <td class="td-seq">1</td>#}
+{#            <td>滋味、 气味</td>#}
+{#            <td>GB 5009.12-2017</td>#}
+{#            <td>有烧烤的香气， 无异味</td>#}
+{#            <td class="td-unit">mg/kg</td>#}
+{#            <td class="td-standard">0.5</td>#}
+{#            <td class="td-conclusion">合格</td>#}
+{#          </tr>#}
+        </tbody>
+      </table>
+
+      <el-row style="margin-top: 10px; font-size: 18px;">
+        <el-col :span="24"><span>备注:该结果仅对本次检验检测样品负责。</span></el-col>
+      </el-row>
+      <el-row style="margin-top: 10px; font-size: 18px; text-align: center;">
+        <el-col :span="24"><span>以下空白</span></el-col>
+      </el-row>
+
+    </div>
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {}
+      }
+    })
+  </script>
+</html>
