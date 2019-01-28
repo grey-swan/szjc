@@ -21,42 +21,8 @@ from .serializer import *
 from .permissions import *
 
 
-def get_page_data(data):
-    page_list = []
-    results = data.get('results', [])
-    for record in results:
-        item = {}
-        for k, v in record.items():
-            if k == 'id':
-                item[k] = v
-                item['page_detail_url'] = reverse('web:page-detail', args={v})
-            elif k == 'owner':
-                item[k] = v
-                item['user_detail_url'] = reverse('web:user-detail', args={v})
-            elif k == 'picture_file':
-                item['picture_url'] = '/static/web/images/user/256/%s' % v
-            elif k == 'collect':
-                item[k] = v
-                item['collect_detail_url'] = reverse('web:collect-detail', args={v})
-            elif k == 'content':
-                if len(v) > 100:
-                    item[k] = ''.join([v[:100], '...'])
-                else:
-                    item[k] = v
-            else:
-                item[k] = v
-        page_list.append(item)
-
-    page_dict = dict(
-        previous=data.get('previous', []),
-        next=data.get('next', []),
-        pages=page_list
-    )
-    return page_dict
-
-
 class SmallPageNumberPagination(PageNumberPagination):
-    page_size = 4
+    page_size = 16
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
