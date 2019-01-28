@@ -338,6 +338,7 @@ class DownloadReport(views.APIView):
 
     def get(self, request, report_id):
         report = self.get_object(report_id)
+        sample = report.sample.get()
         report_serializer = ReportSerializer(report)
 
         filename = '%s.pdf' % report_serializer.data.get('no')
@@ -355,70 +356,11 @@ class DownloadReport(views.APIView):
         url = 'http://localhost:8000%s' % reverse('api:report_view', kwargs={'report_id': report_id})
         pdfkit.from_url(url, file_path, options=options)
 
+        sample.status = 2
+        sample.save()
+
         file = open(file_path, 'rb')
         response = FileResponse(file)
         response['Content-Type'] = 'application/octet-stream'
         response['Content-Disposition'] = 'attachment;filename="%s"' % filename
         return response
-
-
-# class BookViewSet(viewsets.ModelViewSet):
-#     queryset = Book.objects.all()
-#     serializer_class = BookSerializer
-#     # #permission_classes = (IsAuthenticatedOrReadOnly, IsAdminUserOrReadOnly)
-#     # #authentication_classes = (TokenAuthentication, )
-#     pagination_class = SmallPageNumberPagination
-#
-#     def list(self, request, *args, **kwargs):
-#         print(reverse('api:token'))
-#         """获取所有用户所有组发表的文章"""
-#         obj = super(BookViewSet, self).list(request, *args, **kwargs)
-#
-#         # 重新构建返回对象，否则不能被js识别
-#         collect_list = []
-#         for s in obj.data.get('results', []):
-#             item = {}
-#             for k, v in s.items():
-#                 if k == 'collect_id':
-#                     item[k] = v
-#                     item['collect_detail_url'] = reverse('web:collect-detail', args={v})
-#                 else:
-#                     item[k] = v
-#             collect_list.append(item)
-#
-#         return Response(collect_list)
-#
-#     def retrieve(self, request, *args, **kwargs):
-#         # 取该分组下所有文章
-#         instance = self.get_object()
-#         queryset = Chapter.objects.filter(owner=instance.pk)
-#         page = self.paginate_queryset(queryset)
-#         if page is not None:
-#             pages_serializer = ChapterSerializer(page, many=True)
-#             response = self.get_paginated_response(pages_serializer.data)
-#         else:
-#             pages_serializer = ChapterSerializer(queryset, many=True)
-#             response = Response(pages_serializer.data)
-#
-#         pages = get_page_data(response.data)
-#
-#         return Response(pages)
-#
-#
-# class ChapterViewSet(viewsets.ModelViewSet):
-#     queryset = Chapter.objects.all()
-#     serializer_class = ChapterSerializer
-#     # #permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
-#     # #authentication_classes = (TokenAuthentication,)
-#     pagination_class = SmallPageNumberPagination
-#     filter_backends = (SearchFilter,)
-#     search_fields = ('$content', '$title')
-#
-#     '''
-#     def list(self, request, *args, **kwargs):
-#         """获取所有用户所有组发表的文章"""
-#         response = super(ChapterViewSet, self).list(request, *args, **kwargs)
-#         pages = get_page_data(response.data)
-#
-#         return Response(pages)
-#     '''
