@@ -12,3 +12,6 @@ db.sqlite3
 # pyls
 .ropeproject
 api/migrations/*
+sheet_file/*
+report_file/*
+log/*
